@@ -67,16 +67,15 @@ int close(int fd) {
 
 
 int lseek(int fd, int offset, int flag) {
-
-
+	return syscall(__NR_lseek, fd, offset, flag);
 }
 
 void *mmap(void *addr, int len, int prot, int flags, int fd, int offset) {
-
+	return syscall(__NR_mmap, len, prot, flags, fd, offset);
 }
 
 int munmap(void *addr, int len) {
-
+	return syscall(__NR_munmap, addr, len);
 }
 
 /* ---------- */
