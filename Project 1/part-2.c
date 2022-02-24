@@ -281,6 +281,23 @@ void main(void)
 		f = hdr.e_entry + M_offset;
 		f();
 		// for loop to mumap()
+
+		for (i = 0; i < hdr.e_phnum; i++)
+		{
+			if (phdrs[i].p_type == PT_LOAD)
+			{
+				// not all segments should be loaded in memory, only those with p_type PT_LOAD
+				int len = ROUND_UP(phdrs[i].p_memsz, 4096);
+
+				int value = munmap((void *)(buf[i]), len);
+				if (value < 0)
+				{
+					do_print("munmap failed\n");
+					exit(0);
+				}
+			}
+		}
+
 		close(fd);
 	}
 }
