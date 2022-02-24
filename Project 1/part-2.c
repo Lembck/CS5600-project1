@@ -80,6 +80,51 @@ int munmap(void *addr, int len)
 	return syscall(__NR_munmap, addr, len);
 }
 
+/* print a string to stdout (file descriptor 1) */
+void print(char *buffer)
+{
+	for (int i = 0; i < BUFFER_SIZE; i++)
+	{
+		write(1, &buffer[i], 1);
+		if (buffer[i] == '\0')
+		{
+			break;
+		}
+	}
+}
+
+int strcmp(const char *str1, const char *str2)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (*str1 && (*str1 == *str2))
+		{
+			str1++;
+			str2++;
+		}
+	}
+	if (str2[0] == '\0')
+	{
+		return 0;
+	}
+	return (*str1 > *str2) - (*str1 < *str2);
+}
+
+/* read one line from stdin (file descriptor 0) into a buffer: */
+void readline(char *buffer)
+{
+
+	for (int i = 0; i < BUFFER_SIZE; i++)
+	{
+		read(0, &buffer[i], 1);
+		if (buffer[i] == '\n')
+		{
+			buffer[++i] = '\0';
+			break;
+		}
+	}
+}
+
 /* ---------- */
 
 /* the three 'system call' functions - readline, print, getarg
