@@ -8,7 +8,7 @@
 #include "sysdefs.h"
 
 #define BUFFER_SIZE 201
-char BUF[200];
+char BUF[200] = "Grep xyz";
 char *argv[10];
 int argc;
 
@@ -86,7 +86,7 @@ void print(char *buf)
 }
 char *getarg(int i)
 {
-	int argc = split(argv, 10, BUF);
+	argc = split(argv, 10, BUF);
 	// print(argv[0]);
 	if (i >= argc)
 	{
